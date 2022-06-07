@@ -19,22 +19,30 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String name;
+    private String name;
 
-  @Column(unique = true)
-  private String cpf;
+    @Column(unique = true)
+    private String cpf;
 
-  private String address;
+    private String address;
 
-  @Column(name = "birth_date")
-  private LocalDate birthDate;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
-  @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
-  @JsonIgnore
-  private List<EvaluationPhysical> evaluations = new ArrayList<>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<EvaluationPhysical> evaluations = new ArrayList<>();
+
+    public Customer(String name, String cpf, String address, LocalDate birthDate) {
+        this.name = name;
+        this.cpf = cpf;
+        this.address = address;
+        this.birthDate = birthDate;
+
+    }
 
 }

@@ -14,5 +14,6 @@ public class JavaTimeUtils {
 	
 	public static final DateTimeFormatter LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", LOCALE_BR);
 	public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy", LOCALE_BR);
+        public static final DateTimeFormatter LOCAL_DATE_FORMATTER_ = DateTimeFormatter.ofPattern("dd-MM-yyyy", LOCALE_BR);
 
 }

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import me.dio.academia.digital.exception.CustomerNotFoundException;
+import me.dio.academia.digital.exception.GenericException;
 import me.dio.academia.digital.repository.CustomerRepository;
 import me.dio.academia.digital.service.CustomerService;
 
@@ -17,51 +20,76 @@ import me.dio.academia.digital.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerRepository customerrepository;
+    private CustomerRepository customerRepository;
 
     @Override
     public Customer create(CustomerForm form) {
-        Customer customer = new Customer();
-        customer.setName(form.getName());
-        customer.setCpf(form.getCpf());
-        customer.setAddress(form.getAddress());
-        customer.setBirthDate(form.getBirthDate());
-
-        return customerrepository.save(customer);
+        try {
+            Customer customer = new Customer(form.getName(), form.getCpf(), form.getAddress(),
+                    form.getBirthDate());
+            return customerRepository.save(customer);
+        } catch (Exception e) {
+            throw new GenericException();
+        }
     }
 
     @Override
-    public Customer get(Long id) {
-        return null;
+    public Customer getCustomerId(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (!customer.isPresent()) {
+            throw new CustomerNotFoundException();
+        }
+        return customer.get();
     }
 
     @Override
     public List<Customer> getAll(String birthDate) {
 
-        if (birthDate == null) {
-            return customerrepository.findAll();
+        if ("all".equals(birthDate)) {
+            return customerRepository.findAll();
         } else {
-            LocalDate localDate = LocalDate.parse(birthDate, JavaTimeUtils.LOCAL_DATE_FORMATTER);
-            return customerrepository.findByBirthDate(localDate);
+            LocalDate localDate = LocalDate.parse(birthDate, JavaTimeUtils.LOCAL_DATE_FORMATTER_);
+            return customerRepository.findByBirthDate(localDate);
         }
 
     }
 
     @Override
-    public Customer update(Long id, CustomerUpdateForm formUpdate) {
-        return null;
+    public Customer update(Long customerId, CustomerUpdateForm formUpdate) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if (!customer.isPresent()) {
+            throw new CustomerNotFoundException();
+        }
+
+        Customer customerUpdate = customer.get();
+
+        customerUpdate.setName(formUpdate.getName());
+        customerUpdate.setAddress(formUpdate.getAddress());
+        customerUpdate.setBirthDate(formUpdate.getBirthDate());
+        customerRepository.save(customerUpdate);
+
+        return customerUpdate;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (!customer.isPresent()) {
+            throw new CustomerNotFoundException();
+        }
+        customerRepository.deleteById(customerId);
     }
 
     @Override
     public List<EvaluationPhysical> getAllAvaluationPhysicalId(Long id) {
 
-        Customer customer = customerrepository.findById(id).get();
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(!customer.isPresent()){
+            throw new CustomerNotFoundException();
+        }
 
-        return customer.getEvaluations();
+        return customer.get().getEvaluations();
 
     }
 

@@ -16,5 +16,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
    * @return lista com todos os alunos com a data de nascimento passada como parâmetro da função
    */
   List<Customer> findByBirthDate(LocalDate birthDate);
-
+  
 }

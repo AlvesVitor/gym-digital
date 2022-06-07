@@ -8,13 +8,46 @@ import java.util.List;
 
 public interface EvaluationPhysicalService {
 
+    /**
+     * Cria uma EvaluationPhysical e salva no banco de dados.
+     *
+     * @param form - formulário referente aos dados para criação da
+     * EvaluationPhysical no banco de dados.
+     * @return - EvaluationPhysical recém-criada.
+     */
     EvaluationPhysical create(EvaluationPhysicalForm form);
 
-    EvaluationPhysical get(Long id);
+    /**
+     * Retorna uma EvaluationPhysical que está no banco de dados de acordo com
+     * seu Id.
+     *
+     * @param evaluationId - id da EvaluationPhysical que será exibida.
+     * @return - EvaluationPhysical de acordo com o Id fornecido.
+     */
+    EvaluationPhysical get(Long evaluationId);
 
+    /**
+     * Retorna todas as EvaluationPhysical que estão no banco de dados.
+     *
+     * @return - Uma lista com todas as EvaluationPhysical que estão salvas no
+     * DB.
+     */
     List<EvaluationPhysical> getAll();
 
-    EvaluationPhysical update(Long id, EvaluationPhysicalUpdateForm formUpdate);
+    /**
+     * Atualiza a EvaluationPhysical.
+     *
+     * @param evaluationId - id da EvaluationPhysical que será atualizada.
+     * @param formUpdate - formulário referente aos dados necessários para
+     * atualização da Avaliação Física no banco de dados.
+     * @return - EvaluationPhysical recém-atualizada.
+     */
+    EvaluationPhysical update(Long evaluationId, EvaluationPhysicalUpdateForm formUpdate);
 
-    void delete(Long id);
+    /**
+     * Deleta uma EvaluationPhysical específica.
+     *
+     * @param evaluationId - id da EvaluationPhysical que será removida.
+     */
+    void delete(Long evaluationId);
 }

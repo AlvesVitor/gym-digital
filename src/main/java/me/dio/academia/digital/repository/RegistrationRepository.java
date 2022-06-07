@@ -12,8 +12,8 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
 
   /**
    *
-   * @param bairro bairro referência para o filtro
-   * @return lista de alunos matriculados que residem no bairro passado como parâmetro
+   * @param adress adress referência para o filtro
+   * @return lista de alunos matriculados que residem no adress passado como parâmetro
    */
   @Query(value = "SELECT * FROM tb_registration m " +
       "INNER JOIN tb_customer a ON m.customer_id = a.id " +
