@@ -1,15 +1,17 @@
 package me.dio.academia.digital.entity.form;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class EvaluationPhysicalForm {
 
-  //@Positive(message = "O Id do aluno precisa ser positivo.")
+  //@Positive(message = "O Id do customer precisa ser positivo.")
   private Long customerId;
 
   //@NotNull(message = "Preencha o campo corretamente.")

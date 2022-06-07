@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/registrations")
@@ -17,13 +19,13 @@ public class RegistrationController {
   private RegistrationServiceImpl registrationService;
 
   @PostMapping
-  public Registration create(@Valid @RequestBody RegistrationForm form) {
-    return registrationService.create(form);
+  public ResponseEntity<Registration> create(@Valid @RequestBody RegistrationForm form) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.create(form));
   }
 
   @GetMapping
-  public List<Registration> getAll(@RequestParam(value = "address", required = false) String address) {
-    return registrationService.getAll(address);
+  public ResponseEntity<List<Registration>> getAll(@RequestParam(value = "address", required = false) String address) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.getAll(address));
   }
 
 }

@@ -16,53 +16,53 @@ import me.dio.academia.digital.service.CustomerService;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-  @Autowired
-  private CustomerRepository customerrepository;
+    @Autowired
+    private CustomerRepository customerrepository;
 
-  @Override
-  public Customer create(CustomerForm form) {
-    Customer customer = new Customer();
-    customer.setName(form.getName());
-    customer.setCpf(form.getCpf());
-    customer.setAddress(form.getAddress());
-    customer.setBirthDate(form.getBirthDate());
+    @Override
+    public Customer create(CustomerForm form) {
+        Customer customer = new Customer();
+        customer.setName(form.getName());
+        customer.setCpf(form.getCpf());
+        customer.setAddress(form.getAddress());
+        customer.setBirthDate(form.getBirthDate());
 
-    return customerrepository.save(customer);
-  }
-
-  @Override
-  public Customer get(Long id) {
-    return null;
-  }
-
-  @Override
-  public List<Customer> getAll(String birthDate) {
-
-    if(birthDate == null) {
-      return customerrepository.findAll();
-    } else {
-      LocalDate localDate = LocalDate.parse(birthDate, JavaTimeUtils.LOCAL_DATE_FORMATTER);
-      return customerrepository.findByBirthDate(localDate);
+        return customerrepository.save(customer);
     }
 
-  }
+    @Override
+    public Customer get(Long id) {
+        return null;
+    }
 
-  @Override
-  public Customer update(Long id, CustomerUpdateForm formUpdate) {
-    return null;
-  }
+    @Override
+    public List<Customer> getAll(String birthDate) {
 
-  @Override
-  public void delete(Long id) {
-  }
+        if (birthDate == null) {
+            return customerrepository.findAll();
+        } else {
+            LocalDate localDate = LocalDate.parse(birthDate, JavaTimeUtils.LOCAL_DATE_FORMATTER);
+            return customerrepository.findByBirthDate(localDate);
+        }
 
-  @Override
-  public List<EvaluationPhysical> getAllAvaluationPhysicalId(Long id) {
+    }
 
-    Customer customer = customerrepository.findById(id).get();
+    @Override
+    public Customer update(Long id, CustomerUpdateForm formUpdate) {
+        return null;
+    }
 
-    return customer.getEvaluations();
+    @Override
+    public void delete(Long id) {
+    }
 
-  }
+    @Override
+    public List<EvaluationPhysical> getAllAvaluationPhysicalId(Long id) {
+
+        Customer customer = customerrepository.findById(id).get();
+
+        return customer.getEvaluations();
+
+    }
 
 }

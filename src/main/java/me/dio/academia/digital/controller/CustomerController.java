@@ -9,29 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import me.dio.academia.digital.service.CustomerService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
-  @Autowired
-  private CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
-  @PostMapping
-  public Customer create(@Valid @RequestBody CustomerForm form) {
-    return customerService.create(form);
-  }
+    @PostMapping
+    public ResponseEntity<Customer> create(@Valid @RequestBody CustomerForm form) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.create(form));
+    }
 
-  @GetMapping("/evaluation/{id}")
-  public List<EvaluationPhysical> getAllAvaluationPhysicalId(@PathVariable Long id) {
-    return customerService.getAllAvaluationPhysicalId(id);
-  }
+    @GetMapping("/evaluation/{id}")
+    public ResponseEntity<List<EvaluationPhysical>> getAllAvaluationPhysicalId(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerService.getAllAvaluationPhysicalId(id));
+    }
 
-  @GetMapping
-  public List<Customer> getAll(@RequestParam(value = "birthDate", required = false)
-                                  String birthDate){
-    return customerService.getAll(birthDate);
-  }
-
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAll(@RequestParam(value = "birthDate",
+            required = false) String birthDate) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerService.getAll(birthDate));
+    }
 
 }
